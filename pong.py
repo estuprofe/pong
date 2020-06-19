@@ -37,7 +37,7 @@ class Pelota:
         newx = self.x + self.vx
         newy = self.y + self.vy
 
-        if newx < BORDER+self.RADIUS:
+        if newx < BORDER+self.RADIUS or (newx > WIDTH-raqueta.WIDTH and newy > raqueta.gety() and newy < raqueta.gety()+raqueta.HEIGHT):
             self.vx = -self.vx
         elif newy < BORDER+self.RADIUS or newy > HEIGHT-BORDER-self.RADIUS:
             self.vy = -self.vy
@@ -46,6 +46,7 @@ class Pelota:
             self.x= self.x + self.vx
             self.y= self.y + self.vy
             self.mostrar(fgColor)
+
         
 
 class Raqueta:
@@ -57,11 +58,18 @@ class Raqueta:
 
     def show(self, colour):
         global screen, fgColor, bgColor
-        pygame.draw.rect(screen, colour, pygame.Rect((WIDTH-self.WIDTH, self.y-self.HEIGHT//2, WIDTH,self.yself.HEIGHT )))
+        pygame.draw.rect(screen, colour, pygame.Rect((WIDTH-self.WIDTH, self.y, WIDTH-self.WIDTH,self.HEIGHT )))
 
     def update(self):
         self.show(bgColor)
-        self.y = pygame.mouse.get_pos()[1]
+        raton =  pygame.mouse.get_pos()[1]
+        if raton < BORDER or raton > HEIGHT-BORDER-self.HEIGHT:
+            self.y = self.y
+        else: 
+            self.y = raton
+    def gety(self):
+        return self.y
+
         self.show(fgColor)
 
 #Crear objetos
