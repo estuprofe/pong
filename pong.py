@@ -3,7 +3,9 @@
 import pygame
 
 
-# Variable
+# CONFIGURACIÓN
+
+
 WIDTH = 1200
 HEIGHT = 600
 BORDER = 20
@@ -20,6 +22,7 @@ fgColor = pygame.Color("white")
 bgColor = pygame.Color("black")
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.mouse.set_visible(False)
 # definición de clases
 
 
@@ -57,9 +60,14 @@ class Pelota:
         elif newy < BORDER + self.RADIUS or newy > HEIGHT - BORDER - self.RADIUS:
             self.vy = -self.vy
         
-        elif newx > WIDTH-raqueta.WIDTH and newy > raqueta.y and newy < raqueta.y+raqueta.WIDTH:
-            self.x = WIDTH-raqueta.WIDTH-pelota.RADIUS
-            self.vx = -abs(self.vx)
+        elif newx > WIDTH-raqueta.WIDTH and newy > raqueta.y and newy < raqueta.y+raqueta.HEIGHT:
+            temporal=self.vx
+            self.vx=0
+            self.x = WIDTH-raqueta.WIDTH-pelota.RADIUS*2
+            self.vx = -abs(temporal)
+        elif newx > WIDTH-raqueta.WIDTH:
+            self.x = WIDTH+BORDER+self.RADIUS
+            funcionando=False
             
         else:
             self.mostrar(bgColor)
@@ -74,6 +82,7 @@ class Raqueta:
 
     def __init__(self, y):
         self.y = y
+        self.vy=0
 
     def show(self, colour):
         global screen, fgColor, bgColor
@@ -107,6 +116,8 @@ while funcionando:
     e = pygame.event.poll()
     if e.type == pygame.QUIT:
         funcionando=False
+    
+ 
     pygame.display.flip()
     pelota.actualizar()
     raqueta.update()
