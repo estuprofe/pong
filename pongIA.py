@@ -1,8 +1,8 @@
 # coding=utf-8
 #!/bin/python3
 import pygame
-#from sklearn.neighbors import KNeighborsRegressor
-#import pandas
+from sklearn.neighbors import KNeighborsRegressor
+import pandas
 
 
 
@@ -104,10 +104,10 @@ class Raqueta:
         pygame.draw.rect(screen, colour, pygame.Rect(
             (WIDTH - self.WIDTH, self.y, self.WIDTH, self.HEIGHT)))
 
-    def update(self):
+    def update(self, newY):
         self.show(bgColor)
-        raton = pygame.mouse.get_pos()[1]
-        
+        #raton = pygame.mouse.get_pos()[1]
+        raton = newY
         if raton < BORDER or raton > HEIGHT - BORDER - self.HEIGHT:
             self.y = self.y
         else:
@@ -128,16 +128,16 @@ pygame.draw.rect(screen, fgColor, pygame.Rect(
 # Mostrar pantalla
 
 # IA
-#datos = pandas.read_csv("datos.csv")
-#datos = datos.drop_duplicates()
+datos = pandas.read_csv("datos.csv")
+datos = datos.drop_duplicates()
 
-#X = datos.drop(columns='raqueta.y')
-#y = datos['raqueta.y']
+X = datos.drop(columns='raqueta.y')
+y = datos['raqueta.y']
 
-#clf = KneigborsRegressor (n_neighbors = 3)
-#clf = clf.fit(X, y)
+clf = KneigborsRegressor (n_neighbors = 3)
+clf = clf.fit(X, y)
 
-#df = pandas.DataFrame(columns=['x', 'y', 'vx', 'vy'])
+df = pandas.DataFrame(columns=['x', 'y', 'vx', 'vy'])
 # Bucle principal
 
 while funcionando:
@@ -157,10 +157,10 @@ while funcionando:
     if COLECTA_DATOS:
         archivo.write(f"{pelota.x}, {pelota.y}, {pelota.vx}, {pelota.vy}, {raqueta.y} \n")
     pygame.display.flip()
-    #toPredict = df.append({'x': pelota.x, 'y' : pelota.y, 'vx' : pelota.vx, 'vy' : pelota.vy}, ignore_index=True)
-    #shouldMove = clf.predict(toPredict)
+    toPredict = df.append({'x': pelota.x, 'y' : pelota.y, 'vx' : pelota.vx, 'vy' : pelota.vy}, ignore_index=True)
+    shouldMove = clf.predict(toPredict)
 
     pelota.actualizar()
-    raqueta.update()
+    raqueta.update(shouldMove)
 
 pygame.quit()
