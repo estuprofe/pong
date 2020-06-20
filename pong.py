@@ -5,19 +5,26 @@ import pygame
 #import pandas
 
 
+<<<<<<< HEAD
 
 # CONFIGURACIÓN
 clock = pygame.time.Clock()
 datos = open
+=======
+# Variable
+>>>>>>> 4b9b44520a6e9cbffd4f6986d689c6d5c6d5e60a
 WIDTH = 1200
 HEIGHT = 600
 BORDER = 20
 COLECTA_DATOS=0
 if COLECTA_DATOS:
 
+<<<<<<< HEAD
     archivo = open("datos.csv", "w")
     archivo.write("x,y,vx,vy, raqueta.y \n")
 
+=======
+>>>>>>> 4b9b44520a6e9cbffd4f6986d689c6d5c6d5e60a
 VELOCITY = 1
 funcionando=True
 # Dibujar el escenario
@@ -36,7 +43,10 @@ pygame.mouse.set_visible(False)
 
 class Pelota:
     RADIUS = 15
+<<<<<<< HEAD
     
+=======
+>>>>>>> 4b9b44520a6e9cbffd4f6986d689c6d5c6d5e60a
     global bgColor, funcionando
 
     def __init__(self, x, y, colour, vx, vy):
@@ -62,7 +72,11 @@ class Pelota:
         newy = self.y + self.vy
         pygame.draw.rect(screen, bgColor, pygame.Rect(
             (BORDER,BORDER,500,100)))
+<<<<<<< HEAD
         textsurface = myfont.render(f"VIDAS RESTANTES {self.vidas}", False, (220, 220, 220))
+=======
+        textsurface = myfont.render(f"newx {self.x} - newy {self.y}- vx {self.vx}- vy {self.vy}", False, (220, 220, 220))
+>>>>>>> 4b9b44520a6e9cbffd4f6986d689c6d5c6d5e60a
         screen.blit(textsurface,(BORDER,BORDER))
         
         if newx < BORDER + self.RADIUS:
@@ -70,6 +84,7 @@ class Pelota:
         elif newy < BORDER + self.RADIUS or newy > HEIGHT - BORDER - self.RADIUS:
             self.vy = -self.vy
         
+<<<<<<< HEAD
         elif newx > WIDTH-raqueta.WIDTH and newx < WIDTH and newy > raqueta.y and newy < raqueta.y+raqueta.HEIGHT:
             temporal=self.vx
             #self.vx=0
@@ -84,6 +99,12 @@ class Pelota:
             textsurface = myfont.render(f"VIDAS RESTANTES {self.vidas}", False, (220, 220, 220))
             
         
+=======
+        elif newx > WIDTH-raqueta.WIDTH and newy > raqueta.y and newy < raqueta.y+raqueta.WIDTH:
+            self.x = WIDTH-raqueta.WIDTH-pelota.RADIUS
+            self.vx = -abs(self.vx)
+            
+>>>>>>> 4b9b44520a6e9cbffd4f6986d689c6d5c6d5e60a
         else:
             self.mostrar(bgColor)
             self.x = self.x + self.vx
@@ -107,7 +128,10 @@ class Raqueta:
     def update(self):
         self.show(bgColor)
         raton = pygame.mouse.get_pos()[1]
+<<<<<<< HEAD
         
+=======
+>>>>>>> 4b9b44520a6e9cbffd4f6986d689c6d5c6d5e60a
         if raton < BORDER or raton > HEIGHT - BORDER - self.HEIGHT:
             self.y = self.y
         else:
@@ -116,6 +140,7 @@ class Raqueta:
 
 
 # Crear objetos
+<<<<<<< HEAD
 pelota = Pelota(WIDTH // 2, HEIGHT //
                 2, fgColor, -VELOCITY, -VELOCITY)
 raqueta = Raqueta(HEIGHT // 2)
@@ -156,6 +181,24 @@ while funcionando:
         funcionando=False
     if COLECTA_DATOS:
         archivo.write(f"{pelota.x}, {pelota.y}, {pelota.vx}, {pelota.vy}, {raqueta.y} \n")
+=======
+pelota = Pelota(WIDTH - Pelota.RADIUS, HEIGHT //
+                2, fgColor, -VELOCITY, -VELOCITY)
+raqueta = Raqueta(HEIGHT // 2)
+
+# Bordes del juego
+pygame.draw.rect(screen, fgColor, pygame.Rect(0, 0, WIDTH, BORDER))
+pygame.draw.rect(screen, fgColor, pygame.Rect(0, 0, BORDER, WIDTH))
+pygame.draw.rect(screen, fgColor, pygame.Rect(
+    0, HEIGHT - BORDER, WIDTH, HEIGHT))
+# Mostrar pantalla
+
+# Bucle principal
+while funcionando:
+    e = pygame.event.poll()
+    if e.type == pygame.QUIT:
+        funcionando=False
+>>>>>>> 4b9b44520a6e9cbffd4f6986d689c6d5c6d5e60a
     pygame.display.flip()
     #toPredict = df.append({'x': pelota.x, 'y' : pelota.y, 'vx' : pelota.vx, 'vy' : pelota.vy}, ignore_index=True)
     #shouldMove = clf.predict(toPredict)
